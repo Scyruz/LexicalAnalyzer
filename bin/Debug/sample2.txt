@@ -1,0 +1,6 @@
+a := 4;
+If a = 7 then
+b := 5;
+else
+b := a;
+end

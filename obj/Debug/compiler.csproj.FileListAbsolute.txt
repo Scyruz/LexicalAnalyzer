@@ -1,0 +1,8 @@
+C:\Users\Scyruz\source\repos\compiler\compiler\bin\Debug\compiler.exe.config
+C:\Users\Scyruz\source\repos\compiler\compiler\bin\Debug\compiler.exe
+C:\Users\Scyruz\source\repos\compiler\compiler\bin\Debug\compiler.pdb
+C:\Users\Scyruz\source\repos\compiler\compiler\obj\Debug\compiler.csproj.AssemblyReference.cache
+C:\Users\Scyruz\source\repos\compiler\compiler\obj\Debug\compiler.csproj.SuggestedBindingRedirects.cache
+C:\Users\Scyruz\source\repos\compiler\compiler\obj\Debug\compiler.csproj.CoreCompileInputs.cache
+C:\Users\Scyruz\source\repos\compiler\compiler\obj\Debug\compiler.exe
+C:\Users\Scyruz\source\repos\compiler\compiler\obj\Debug\compiler.pdb
