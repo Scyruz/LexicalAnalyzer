@@ -30,14 +30,9 @@ namespace compiler
             int i = -1;
             int entryId = 1;
             int entryNum = 1;
-            int openCurlys = 0;
-            int closedCurlys = 0;
-            int openParens = 0;
-            int closedParens = 0;
 
             //boolean values that work as helpers for detecting errors
             bool readingComment = false;
-            bool isBracketOpen = false;
             bool temporalIsUnvalid = false;
 
             //string arrays to save symbol tables
@@ -58,7 +53,9 @@ namespace compiler
                         {
                             temporal += character.ToString();
                             //check if letters and digits are not mixed
-                            if (Char.IsDigit(chars[i + 1]) || Char.IsDigit(chars[i - 1]))
+                            if (Char.IsDigit(chars[i + 1]) || Char.IsDigit(chars[i - 1])
+                                
+                                )
                             {
                                 temporalIsUnvalid = true;
                             }
@@ -220,7 +217,11 @@ namespace compiler
                                 if (chars[i + 1] == '/')
                                 {
                                     if (readingComment == true) scanner += ";503";
-                                    else errors += "*/ is missing opening comment symbol '/*'";
+                                    else 
+                                    {
+                                        errors += "*/ is missing opening comment symbol '/*'";
+                                        scanner += ";503";
+                                    }
                                     readingComment = false;
                                     /*scanner += ";502";*/
                                     break;
@@ -293,56 +294,27 @@ namespace compiler
                                 break;
                             case ';':
                                 if (readingComment != true) scanner += ";100";
-                                if (isBracketOpen == true)
-                                {
-                                    errors += ";']' expected to close statement near '" + chars[i - 3] + chars[i - 2] + chars[i - 1] + "'";
-                                    isBracketOpen = false;
-                                }
                                 break;
                             case ',':
-                                   if (readingComment != true) scanner += ";200";
+                                if (readingComment != true) scanner += ";200";
                                 break;
                             case '(':
-                                if (readingComment != true)
-                                {
-                                    scanner += ";300";
-                                    openParens ++;
-                                }
-
+                                if (readingComment != true) scanner += ";300";
                                 break;
                             case ')':
-                                if (readingComment != true)
-                                {                                    
-                                    scanner += ";400";
-                                    closedParens ++;
-                                }
+                                if (readingComment != true) scanner += ";400";
                                 break;
                             case '[':
-                                if (readingComment != true) 
-                                {
-                                    scanner += ";500";
-                                    isBracketOpen = true;
-                                }
+                                if (readingComment != true) scanner += ";500";
                                 break;
                             case ']':
-                                if (readingComment != true)
-                                {
-                                    if (isBracketOpen == true) scanner += ";600";
-                                    else errors += "Missing opening comment symbol '['";
-                                    isBracketOpen = false;
-                                }
+                                if (readingComment != true) scanner += ";600";
                                 break;
                             case '{':
-                                if (readingComment != true) {
-                                    openCurlys ++;
-                                    scanner += ";700";
-                                } 
+                                if (readingComment != true) scanner += ";700";
                                 break;
                             case '}':
-                                if (readingComment != true) {
-                                    closedCurlys ++;
-                                    scanner += ";800";
-                                } 
+                                if (readingComment != true) scanner += ";800";
                                 break;
                             default: //if a character is not a valid token, letter, digit, or white space, it is an invalid character
                                 if (readingComment != true) 
@@ -358,24 +330,6 @@ namespace compiler
             if (readingComment == true)
             {
                 errors += ";'*/' expected to close comment";
-            }
-            //check if there are any missing curly brackets and save the error if necessary
-            if (openCurlys > closedCurlys)
-            {
-                errors += ";Missing " + (openCurlys-closedCurlys) + " '}'s";
-            }
-            if (openCurlys < closedCurlys)
-            {
-                errors += ";Missing " + (closedCurlys - openCurlys) + " '{'s";
-            }
-            //check if there are any missing parenthesis and save the error if necessary
-            if (openParens > closedParens)
-            {
-                errors += ";Missing " + (openParens - closedParens) + " ')'s";
-            }
-            if (openParens < closedParens)
-            {
-                errors += ";Missing " + (closedParens - openParens) + " '('s";
             }
             Console.WriteLine();
             Console.WriteLine("Scanner Output");
